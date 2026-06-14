@@ -1,0 +1,6 @@
+.venv/
+node_modules/
+local.settings.json
+.env
+__pycache__/
+.vscode/
