@@ -3,7 +3,7 @@ print("TEST STARTED")
 from classify.mock_classifier import classify_prompt
 from logwriter.mock_logger import create_log
 
-prompt = "Hello, how're ya"
+prompt = "aadhar"
 
 result = classify_prompt(prompt)
 
