@@ -1,13 +1,34 @@
 import azure.functions as func
 import logging
+import json
+
+from ai.mock_ai import MockAI
 
 app = func.FunctionApp()
 
+client = MockAI()
+
+
 @app.route(route="ClassifyPrompt", auth_level=func.AuthLevel.ANONYMOUS)
 def classify_prompt(req: func.HttpRequest) -> func.HttpResponse:
+
     logging.info("Request received")
 
-    return func.HttpResponse(
-        "ClassifyPrompt API is working!",
-        status_code=200
-    )
+    try:
+        body = req.get_json()
+        prompt = body.get("prompt", "")
+
+        result = client.classify(prompt)
+
+        return func.HttpResponse(
+            json.dumps(result),
+            mimetype="application/json",
+            status_code=200
+        )
+
+    except Exception as e:
+        return func.HttpResponse(
+            json.dumps({"error": str(e)}),
+            mimetype="application/json",
+            status_code=400
+        )
