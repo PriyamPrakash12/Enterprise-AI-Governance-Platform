@@ -10,11 +10,14 @@ class MockAI(AIClient):
                     "risk": "HIGH",
                     "decision": "BLOCK",
                     "contains_pii": True,
-                    "categories": [word.upper()]
+                    "categories": [word.upper()],
+                    "reason": f"Detected {word.title()} information in the prompt."
                 }
+                
         return {
             "risk": "LOW",
             "decision": "ALLOW",
             "contains_pii": False,
-            "categories": []
+            "categories": [],
+            "reason": "No sensitive information detected."
         }
