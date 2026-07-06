@@ -1,0 +1,24 @@
+{
+    "AADHAAR": [
+        "aadhaar",
+        "aadhar",
+        "adhar"
+    ],
+    "PAN": [
+        "pan",
+        "pan card"
+    ],
+    "PASSWORD": [
+        "password",
+        "passcode",
+        "pwd"
+    ],
+    "CREDIT_CARD": [
+        "credit card",
+        "credit",
+        "visa",
+        "mastercard",
+        "debit card",
+        "debit"
+    ]
+}
