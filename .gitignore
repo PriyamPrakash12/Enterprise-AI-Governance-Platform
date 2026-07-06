@@ -1,6 +1,20 @@
-.venv/
 node_modules/
 local.settings.json
 .env
-__pycache__/
+
+# IDE files
+.idea/
 .vscode/
+
+# HTTP test files (Azure Functions / REST client)
+functions/test.http
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# OS files
+.DS_Store
