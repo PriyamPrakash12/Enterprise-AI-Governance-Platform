@@ -25,4 +25,5 @@ async function analyzePrompt() {
     document.getElementById("pii").innerText = data.contains_pii;
     document.getElementById("categories").innerText = data.categories.join(", ");
     document.getElementById("reason").innerText = data.reason;
+    document.getElementById("sanitized").innerText = data.sanitized_prompt;
 }
