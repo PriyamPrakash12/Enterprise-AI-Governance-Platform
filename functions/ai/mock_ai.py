@@ -35,7 +35,9 @@ class MockAI(AIClient):
     def classify(self, prompt):
 
         detected_categories = []
-
+        
+        sanitized_prompt = prompt
+        
         # Keyword detection
         for category, words in self.keywords.items():
 
@@ -49,10 +51,18 @@ class MockAI(AIClient):
         # Regex detection
         for category, pattern in self.regex_patterns.items():
 
-            if re.search(pattern, prompt):
+            matches = re.findall(pattern, sanitized_prompt)
+
+            if matches:
 
                 if category not in detected_categories:
                     detected_categories.append(category)
+
+            sanitized_prompt = re.sub(
+                pattern,
+                f"[{category}]",
+                sanitized_prompt
+            )
 
         # Final decision
         if detected_categories:
@@ -62,7 +72,8 @@ class MockAI(AIClient):
                 "decision": "BLOCK",
                 "contains_pii": True,
                 "categories": detected_categories,
-                "reason": f"Detected: {', '.join(detected_categories)}."
+                "reason": f"Detected: {', '.join(detected_categories)}.",
+                "sanitized_prompt": sanitized_prompt,
             }
 
         return {
@@ -70,5 +81,6 @@ class MockAI(AIClient):
             "decision": "ALLOW",
             "contains_pii": False,
             "categories": [],
-            "reason": "No sensitive information detected."
+            "reason": "No sensitive information detected.",
+            "sanitized_prompt": prompt,
         }
