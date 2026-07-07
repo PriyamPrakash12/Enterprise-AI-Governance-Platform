@@ -58,11 +58,21 @@ class MockAI(AIClient):
                 if category not in detected_categories:
                     detected_categories.append(category)
 
-            sanitized_prompt = re.sub(
-                pattern,
-                f"[{category}]",
-                sanitized_prompt
-            )
+            if category == "PASSWORD":
+
+                sanitized_prompt = re.sub(
+                    pattern,
+                    lambda m: m.group(0).replace(m.group(1), "[PASSWORD]"),
+                    sanitized_prompt
+                )
+
+            else:
+
+                sanitized_prompt = re.sub(
+                    pattern,
+                    lambda m: m.group(0).replace(m.group(1), f"[{category}]"),
+                    sanitized_prompt
+                )
 
         # Final decision
         if detected_categories:
