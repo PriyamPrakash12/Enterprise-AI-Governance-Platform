@@ -32,7 +32,7 @@ class MockAI(AIClient):
         with open(regex_file, "r") as file:
             self.regex_patterns = json.load(file)
 
-    def classify(self, prompt):
+    def classify(self, prompt, sanitize=False):
 
         detected_categories = []
         
@@ -77,13 +77,15 @@ class MockAI(AIClient):
         # Final decision
         if detected_categories:
 
+            decision = "SANITIZE" if sanitize else "BLOCK"
+
             return {
                 "risk": "HIGH",
-                "decision": "BLOCK",
+                "decision": decision,
                 "contains_pii": True,
                 "categories": detected_categories,
                 "reason": f"Detected: {', '.join(detected_categories)}.",
-                "sanitized_prompt": sanitized_prompt,
+                "sanitized_prompt": sanitized_prompt if sanitize else prompt,
             }
 
         return {
