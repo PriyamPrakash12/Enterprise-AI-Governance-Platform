@@ -16,9 +16,11 @@ def classify_prompt(req: func.HttpRequest) -> func.HttpResponse:
 
     try:
         body = req.get_json()
-        prompt = body.get("prompt", "")
 
-        result = client.classify(prompt)
+        prompt = body.get("prompt", "")
+        sanitize = body.get("sanitize", False)
+
+        result = client.classify(prompt, sanitize)
 
         return func.HttpResponse(
             json.dumps(result),
@@ -27,6 +29,8 @@ def classify_prompt(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
+        logging.exception(e)
+
         return func.HttpResponse(
             json.dumps({"error": str(e)}),
             mimetype="application/json",
