@@ -23,9 +23,10 @@ def classify_prompt(req: func.HttpRequest) -> func.HttpResponse:
         logging.info(body)
 
         prompt = body.get("prompt", "")
+        sanitize = body.get("sanitize", False)
 
         result = client.classify(prompt, sanitize)
-        
+
         return func.HttpResponse(
             json.dumps(result),
             mimetype="application/json",

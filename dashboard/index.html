@@ -25,6 +25,14 @@
             id="prompt"
             class="form-control mt-3"
             rows="6"
+            placeholder="My aadhaar number is 1234 5678 9012"></textarea>
+
+        <!-- Policy Toggle -->
+        <div class="form-check form-switch mt-3">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="sanitizeMode">
             placeholder="My aadhar number is 2423242"></textarea>
         
         <div class="form-check form-switch mt-3">
@@ -60,7 +68,10 @@
 
         <p><b>Reason:</b> <span id="reason"></span></p>
 
-        <p><b>Sanitized Prompt:</b> <span id="sanitized"></span></p>
+        <p id="sanitizedSection" style="display:none;">
+            <b>Sanitized Prompt:</b>
+            <span id="sanitized"></span>
+        </p>
 
     </div>
 
