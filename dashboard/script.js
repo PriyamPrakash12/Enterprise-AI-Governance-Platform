@@ -5,6 +5,9 @@ async function analyzePrompt() {
     console.log("Analyze clicked");
 
     const prompt = document.getElementById("prompt").value;
+    
+    const sanitizeMode =
+    document.getElementById("sanitizeMode").checked;
 
     const sanitizeMode =
         document.getElementById("sanitizeMode").checked;
