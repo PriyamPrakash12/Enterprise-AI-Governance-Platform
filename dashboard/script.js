@@ -5,27 +5,25 @@ async function analyzePrompt() {
     console.log("Analyze clicked");
 
     const prompt = document.getElementById("prompt").value;
-    
-    const sanitizeMode =
-    document.getElementById("sanitizeMode").checked;
 
     const sanitizeMode =
         document.getElementById("sanitizeMode").checked;
 
-    const response = await fetch("http://localhost:7071/api/ClassifyPrompt", {
+    const response = await fetch(
+        "http://localhost:7071/api/ClassifyPrompt",
+        {
+            method: "POST",
 
-        method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            prompt: prompt,
-            sanitize: sanitizeMode
-        })
-
-    });
+            body: JSON.stringify({
+                prompt: prompt,
+                sanitize: sanitizeMode
+            })
+        }
+    );
 
     const data = await response.json();
 
@@ -34,7 +32,8 @@ async function analyzePrompt() {
     document.getElementById("risk").innerText = data.risk;
     document.getElementById("decision").innerText = data.decision;
     document.getElementById("pii").innerText = data.contains_pii;
-    document.getElementById("categories").innerText = data.categories.join(", ");
+    document.getElementById("categories").innerText =
+        data.categories.join(", ");
     document.getElementById("reason").innerText = data.reason;
 
     const sanitizedSection =
