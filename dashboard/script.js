@@ -5,6 +5,9 @@ async function analyzePrompt() {
     console.log("Analyze clicked");
 
     const prompt = document.getElementById("prompt").value;
+    
+    const sanitizeMode =
+    document.getElementById("sanitizeMode").checked;
 
     const response = await fetch("http://localhost:7071/api/ClassifyPrompt", {
         method: "POST",
@@ -12,7 +15,8 @@ async function analyzePrompt() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            prompt: prompt
+            prompt: prompt,
+            sanitize: sanitizeMode
         })
     });
 
@@ -25,4 +29,5 @@ async function analyzePrompt() {
     document.getElementById("pii").innerText = data.contains_pii;
     document.getElementById("categories").innerText = data.categories.join(", ");
     document.getElementById("reason").innerText = data.reason;
+    document.getElementById("sanitized").innerText = data.sanitized_prompt;
 }
