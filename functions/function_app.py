@@ -8,17 +8,16 @@ app = func.FunctionApp()
 
 client = MockAI()
 
+
 @app.route(route="ClassifyPrompt", auth_level=func.AuthLevel.ANONYMOUS)
 def classify_prompt(req: func.HttpRequest) -> func.HttpResponse:
 
     logging.info("========== REQUEST RECEIVED ==========")
-
     logging.info(req.get_body())
 
     try:
+
         body = req.get_json()
-        
-        sanitize = body.get("sanitize", False)
 
         logging.info(body)
 
