@@ -35,12 +35,9 @@ class MockAI(AIClient):
     def classify(self, prompt, sanitize=False):
 
         detected_categories = []
-
         sanitized_prompt = prompt
 
-        # ----------------------------
         # Keyword Detection
-        # ----------------------------
         for category, words in self.keywords.items():
 
             for word in words:
@@ -50,9 +47,7 @@ class MockAI(AIClient):
                     if category not in detected_categories:
                         detected_categories.append(category)
 
-        # ----------------------------
-        # Regex Detection + Masking
-        # ----------------------------
+        # Regex Detection
         for category, pattern in self.regex_patterns.items():
 
             matches = re.findall(pattern, sanitized_prompt)
@@ -62,40 +57,35 @@ class MockAI(AIClient):
                 if category not in detected_categories:
                     detected_categories.append(category)
 
-            if sanitize:
+                if sanitize:
 
-                if category == "PASSWORD":
+                    if category == "PASSWORD":
 
-                    sanitized_prompt = re.sub(
-                        pattern,
-                        lambda m: m.group(0).replace(
-                            m.group(1),
-                            "[PASSWORD]"
-                        ),
-                        sanitized_prompt
-                    )
+                        sanitized_prompt = re.sub(
+                            pattern,
+                            lambda m: m.group(0).replace(
+                                m.group(1),
+                                "[PASSWORD]"
+                            ),
+                            sanitized_prompt
+                        )
 
-                else:
+                    else:
 
-                    sanitized_prompt = re.sub(
-                        pattern,
-                        lambda m: m.group(0).replace(
-                            m.group(1),
-                            f"[{category}]"
-                        ),
-                        sanitized_prompt
-                    )
+                        sanitized_prompt = re.sub(
+                            pattern,
+                            lambda m: m.group(0).replace(
+                                m.group(1),
+                                f"[{category}]"
+                            ),
+                            sanitized_prompt
+                        )
 
-        # ----------------------------
-        # Final Decision
-        # ----------------------------
         if detected_categories:
-
-            decision = "SANITIZE" if sanitize else "BLOCK"
 
             return {
                 "risk": "HIGH",
-                "decision": decision,
+                "decision": "SANITIZE" if sanitize else "BLOCK",
                 "contains_pii": True,
                 "categories": detected_categories,
                 "reason": f"Detected: {', '.join(detected_categories)}.",
