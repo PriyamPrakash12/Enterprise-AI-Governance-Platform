@@ -1,17 +1,398 @@
-body{
+/* ============================================================
+   Enterprise AI Governance Platform — Console Theme
+   Tokens: ink-navy surfaces, mono data readouts, stamped decisions
+   ============================================================ */
 
-    background:#f4f6f8;
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --bg: #0A0F1A;
+    --panel: #111826;
+    --panel-alt: #0D1420;
+    --border: #1C2534;
+    --border-soft: #182034;
+    --text: #E7ECF5;
+    --muted: #7C8AA0;
+    --muted-dim: #566173;
+    --accent: #4C8DFF;
+    --accent-dim: #2C4470;
+    --signal-safe: #34D399;
+    --signal-warn: #FBBF24;
+    --signal-block: #F5555A;
+    --radius: 10px;
+}
+
+/* ---------- base ---------- */
+
+body {
+    background:
+        radial-gradient(circle at 15% 0%, rgba(76, 141, 255, 0.08), transparent 45%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 3px),
+        var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 720px;
+}
+
+/* ---------- header ---------- */
+
+h2.text-center {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.65rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    position: relative;
+    padding-bottom: 14px;
+    margin-bottom: 2.25rem !important;
+}
+
+h2.text-center::before {
+    content: "AI GOVERNANCE · PROMPT RISK CONSOLE";
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+h2.text-center::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+}
+
+/* ---------- panels ---------- */
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.03) inset,
+        0 20px 40px -20px rgba(0,0,0,0.6) !important;
+    position: relative;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 16px; right: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(76,141,255,0.5), transparent);
+}
+
+.card h5,
+.card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card h5::before,
+.card h4::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    flex-shrink: 0;
+}
+
+/* ---------- textarea / scan input ---------- */
+
+textarea#prompt {
+    background: var(--panel-alt);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.3s ease;
+}
+
+textarea#prompt::placeholder {
+    color: var(--muted-dim);
+}
+
+textarea#prompt:focus {
+    background: var(--panel-alt);
+    border-color: var(--accent);
+    color: var(--text);
+    box-shadow:
+        0 0 0 3px rgba(76, 141, 255, 0.12),
+        0 0 24px rgba(76, 141, 255, 0.08);
+    outline: none;
+}
+
+/* ---------- switch ---------- */
+
+.form-check-input {
+    background-color: var(--panel-alt);
+    border: 1px solid var(--border);
+    width: 2.4em;
+    height: 1.3em;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(76, 141, 255, 0.15);
+    border-color: var(--accent);
+}
+
+.form-check-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+/* ---------- button ---------- */
+
+.btn-primary {
+    background: var(--accent);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.65rem 1.6rem;
+    border-radius: 6px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-primary:hover {
+    background: #5D99FF;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px -6px rgba(76, 141, 255, 0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* ---------- results ---------- */
+
+.card.mt-4 p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin: 0;
+    border-bottom: 1px dashed var(--border-soft);
+}
+
+.card.mt-4 p:last-of-type {
+    border-bottom: none;
+}
+
+.card.mt-4 p b {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-dim);
+}
+
+.card.mt-4 p span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    text-align: right;
+    max-width: 60%;
+}
+
+/* Decision — rendered as a stamped clearance badge */
+#decision {
+    display: inline-block;
+    padding: 3px 12px;
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transform: rotate(-1.5deg);
+    background: rgba(76, 141, 255, 0.08);
+}
+
+/* Risk value gets slightly heavier treatment */
+#risk {
+    font-weight: 600;
+    color: var(--signal-warn);
+}
+
+#pii {
+    font-weight: 600;
+}
+
+#sanitizedSection {
+    display: block;
+    margin-top: 4px;
+    padding: 14px;
+    background: var(--panel-alt);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--signal-warn);
+    border-radius: 6px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#sanitizedSection b {
+    margin-bottom: 6px;
+}
+
+#sanitized {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text);
+    max-width: 100%;
+    text-align: left;
+    white-space: pre-wrap;
+}
+
+/* ---------- scrollbar polish ---------- */
+
+textarea#prompt::-webkit-scrollbar {
+    width: 8px;
+}
+
+textarea#prompt::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+/* =======================================
+   Dynamic Risk Colors
+======================================= */
+
+.risk-low{
+    color: var(--signal-safe) !important;
+    font-weight:600;
+}
+
+.risk-medium{
+    color: var(--signal-warn) !important;
+    font-weight:600;
+}
+
+.risk-high{
+    color: var(--signal-block) !important;
+    font-weight:600;
+}
+
+
+/* =======================================
+   Decision Badge Colors
+======================================= */
+
+.decision-allow{
+    color: var(--signal-safe) !important;
+    border-color: var(--signal-safe) !important;
+    background: rgba(52,211,153,.08);
+}
+
+.decision-sanitize{
+    color: var(--signal-warn) !important;
+    border-color: var(--signal-warn) !important;
+    background: rgba(251,191,36,.08);
+}
+
+.decision-block{
+    color: var(--signal-block) !important;
+    border-color: var(--signal-block) !important;
+    background: rgba(245,85,90,.08);
+}
+
+
+/* =======================================
+   Category Pills
+======================================= */
+
+.category-tag{
+
+    display:inline-block;
+
+    padding:4px 10px;
+
+    margin:2px;
+
+    border-radius:20px;
+
+    background:#182034;
+
+    border:1px solid #324869;
+
+    font-family:'IBM Plex Mono', monospace;
+
+    font-size:.75rem;
+
+    color:white;
 
 }
 
-.card{
 
-    border-radius:15px;
+/* =======================================
+   Progress Bars
+======================================= */
+
+.progress{
+
+    background:#1C2534;
+
+    height:12px;
+
+    border-radius:10px;
 
 }
 
-textarea{
+.progress-bar{
 
-    resize:none;
+    transition:width .4s ease;
+
+}
+
+
+/* =======================================
+   Status Badge
+======================================= */
+
+.status-online{
+
+    color:var(--signal-safe);
+
+    font-family:'IBM Plex Mono';
+
+    font-size:.75rem;
+
+    letter-spacing:.08em;
+
+    margin-bottom:15px;
 
 }

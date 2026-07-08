@@ -64,25 +64,74 @@
 
         <h4>Analysis Result</h4>
 
-        <p><b>Risk:</b> <span id="risk"></span></p>
+        <div class="status-online">
+            ● Policy Engine Active
+        </div>
 
-        <p><b>Decision:</b> <span id="decision"></span></p>
+        <p>
+            <b>Risk</b>
+            <span id="risk"></span>
+        </p>
 
-        <p><b>Contains PII:</b> <span id="pii"></span></p>
+        <p>
+            <b>Decision</b>
+            <span id="decision"></span>
+        </p>
 
-        <p><b>Categories:</b> <span id="categories"></span></p>
+        <p>
+            <b>Contains PII</b>
+            <span id="pii"></span>
+        </p>
 
-        <p><b>Reason:</b> <span id="reason"></span></p>
+        <p>
+            <b>Categories</b>
+            <span id="categories"></span>
+        </p>
+
+        <p>
+            <b>Reason</b>
+            <span id="reason"></span>
+        </p>
+
+        <p>
+            <b>Risk Score</b>
+        </p>
+
+        <div class="progress mb-3">
+
+            <div
+                id="riskBar"
+                class="progress-bar bg-danger"
+                style="width:0%">
+            </div>
+
+        </div>
+
+        <p>
+
+            <b>Confidence</b>
+
+        </p>
+
+        <div class="progress mb-3">
+
+            <div
+                id="confidenceBar"
+                class="progress-bar bg-info"
+                style="width:0%">
+            </div>
+
+        </div>
 
         <p id="sanitizedSection" style="display:none;">
 
-            <b>Sanitized Prompt:</b>
+            <b>Sanitized Prompt</b>
+
+            <br>
 
             <span id="sanitized"></span>
 
         </p>
-
-    </div>
 
 </div>
 
