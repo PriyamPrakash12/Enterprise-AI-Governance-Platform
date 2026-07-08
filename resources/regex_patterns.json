@@ -9,5 +9,5 @@
 
     "CREDIT_CARD": "\\b((?:\\d[ -]*?){13,16})\\b",
 
-    "PASSWORD": "(?i)(?:password|pwd|pass)\\s*(?:is|=|:)?\\s*([^\\s,.;]+)"
+    "PASSWORD": "(?i)(?:password|pwd|pass)\\s*(?:is|=|:)?\\s*[\"']?([^\\s\"',.;]+)[\"']?"
 }
